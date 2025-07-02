@@ -12,7 +12,7 @@
       text-align: center;
       padding: 2rem;
     }
-    #codeInput, #loadButton, #drawButton {
+    #codeInput, #loadButton, #actionButton {
       font-size: 1rem;
       padding: 0.5rem 1rem;
       margin: 1rem;
@@ -32,6 +32,12 @@
       50% { box-shadow: 0 0 20px rgba(255, 140, 0, 0.6); }
       100% { box-shadow: 0 0 10px rgba(255, 100, 0, 0.3); }
     }
+    #scrolls {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
     .scroll {
       width: 200px;
       height: 60px;
@@ -39,17 +45,22 @@
       color: #000;
       border: 2px solid #aa8855;
       border-radius: 10px;
-      margin: 10px auto;
       display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
       position: relative;
+      animation: none;
+    }
+    .scroll.fly {
       animation: flyOut 1s ease-in-out forwards;
+    }
+    .scroll.reveal {
+      animation: revealScroll 1.5s ease forwards;
     }
     @keyframes flyOut {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-150px); }
-    }
-    .scroll.reveal {
-      animation: revealScroll 1.5s ease forwards;
     }
     @keyframes revealScroll {
       0% { transform: translateY(-200px); opacity: 0; }
@@ -65,7 +76,7 @@
 
   <div id="scrolls"></div>
   <div id="goblet"></div>
-  <button id="drawButton" onclick="drawScroll()" style="display:none;">Получить задание</button>
+  <button id="actionButton" onclick="handleAction()" style="display:none;">Начать игру</button>
   <div id="result" style="margin-top: 2rem; font-size: 1.5rem;"></div>
 
   <script>
@@ -93,6 +104,7 @@
     };
 
     let options = [];
+    let stage = 0;
 
     function loadScrolls() {
       const code = document.getElementById('codeInput').value.trim();
@@ -105,33 +117,38 @@
       }
 
       options = dataByCode[code].events;
-      options.forEach((text, index) => {
+      options.forEach((text) => {
         const scroll = document.createElement('div');
         scroll.className = 'scroll';
-        scroll.style.animation = 'none';
-        scroll.style.display = 'block';
+        scroll.style.display = 'flex';
         scroll.textContent = text;
         scrollsDiv.appendChild(scroll);
       });
 
-      document.getElementById('drawButton').style.display = 'inline-block';
+      document.getElementById('actionButton').textContent = 'Начать игру';
+      document.getElementById('actionButton').style.display = 'inline-block';
+      stage = 0;
     }
 
-    function drawScroll() {
+    function handleAction() {
       const scrolls = document.querySelectorAll('.scroll');
-      scrolls.forEach(scroll => {
-        scroll.style.animation = 'flyOut 1s ease-in-out forwards';
-      });
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
 
-      setTimeout(() => {
+      if (stage === 0) {
+        scrolls.forEach(scroll => {
+          scroll.classList.add('fly');
+        });
+        document.getElementById('actionButton').textContent = 'Получить задание';
+        stage = 1;
+      } else {
         const selected = options[Math.floor(Math.random() * options.length)];
-        const resultDiv = document.getElementById('result');
         const reveal = document.createElement('div');
         reveal.className = 'scroll reveal';
         reveal.textContent = selected;
-        resultDiv.innerHTML = '';
         resultDiv.appendChild(reveal);
-      }, 1200);
+        document.getElementById('actionButton').style.display = 'none';
+      }
     }
   </script>
 </body>
