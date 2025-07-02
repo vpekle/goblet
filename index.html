@@ -57,6 +57,7 @@
     }
     .scroll.reveal {
       animation: revealScroll 1.5s ease forwards;
+      display: flex;
     }
     @keyframes flyOut {
       0% { opacity: 1; transform: translateY(0); }
@@ -110,6 +111,7 @@
       const code = document.getElementById('codeInput').value.trim();
       const scrollsDiv = document.getElementById('scrolls');
       scrollsDiv.innerHTML = '';
+      document.getElementById('result').innerHTML = '';
 
       if (!dataByCode[code]) {
         alert("Неверный код персонажа.");
@@ -142,10 +144,14 @@
         document.getElementById('actionButton').textContent = 'Получить задание';
         stage = 1;
       } else {
+        scrolls.forEach(scroll => {
+          scroll.style.display = 'none';
+        });
         const selected = options[Math.floor(Math.random() * options.length)];
         const reveal = document.createElement('div');
         reveal.className = 'scroll reveal';
         reveal.textContent = selected;
+        resultDiv.innerHTML = '';
         resultDiv.appendChild(reveal);
         document.getElementById('actionButton').style.display = 'none';
       }
