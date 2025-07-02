@@ -19,18 +19,11 @@
     }
     #goblet {
       margin: 2rem auto;
-      width: 150px;
-      height: 200px;
-      background: radial-gradient(circle, #3b2d1f 40%, #1a0f05 100%);
-      border-radius: 20% 20% 50% 50% / 20% 20% 30% 30%;
+      width: 200px;
+      height: 250px;
+      background: url('/mnt/data/goblet.png') no-repeat center center;
+      background-size: contain;
       position: relative;
-      box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
-      animation: flicker 2s infinite;
-    }
-    @keyframes flicker {
-      0% { box-shadow: 0 0 10px rgba(255, 100, 0, 0.3); }
-      50% { box-shadow: 0 0 20px rgba(255, 140, 0, 0.6); }
-      100% { box-shadow: 0 0 10px rgba(255, 100, 0, 0.3); }
     }
     #scrolls {
       display: flex;
@@ -41,10 +34,10 @@
     .scroll {
       width: 200px;
       min-height: 60px;
-      background: #f0e6d2;
+      background: url('/mnt/data/pergament.png') no-repeat center center;
+      background-size: cover;
       color: #000;
-      border: 2px solid #aa8855;
-      border-radius: 10px;
+      border: none;
       display: none;
       align-items: center;
       justify-content: center;
@@ -70,13 +63,16 @@
       font-size: 1.2rem;
       width: 300px;
       min-height: 80px;
+      padding: 1rem;
+      background: url('/mnt/data/pergament.png') no-repeat center center;
+      background-size: cover;
     }
     @keyframes flyOut {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-150px); }
     }
     @keyframes revealScroll {
-      0% { transform: translate(-50%, 50px); opacity: 0; }
+      0% { transform: translate(-50%, 100px); opacity: 0; }
       100% { transform: translate(-50%, -50%); opacity: 1; }
     }
     #result {
