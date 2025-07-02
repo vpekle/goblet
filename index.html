@@ -40,7 +40,7 @@
     }
     .scroll {
       width: 200px;
-      height: 60px;
+      min-height: 60px;
       background: #f0e6d2;
       color: #000;
       border: 2px solid #aa8855;
@@ -49,6 +49,9 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
+      padding: 0.5rem;
+      box-sizing: border-box;
+      text-align: center;
       position: relative;
       animation: none;
     }
@@ -58,14 +61,23 @@
     .scroll.reveal {
       animation: revealScroll 1.5s ease forwards;
       display: flex;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -100px;
+      z-index: 10;
     }
     @keyframes flyOut {
       0% { opacity: 1; transform: translateY(0); }
       100% { opacity: 0; transform: translateY(-150px); }
     }
     @keyframes revealScroll {
-      0% { transform: translateY(-200px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
+      0% { transform: translate(-50%, 50px); opacity: 0; }
+      100% { transform: translate(-50%, -100px); opacity: 1; }
+    }
+    #result {
+      position: relative;
+      height: 100px;
     }
   </style>
 </head>
@@ -78,7 +90,7 @@
   <div id="scrolls"></div>
   <div id="goblet"></div>
   <button id="actionButton" onclick="handleAction()" style="display:none;">Начать игру</button>
-  <div id="result" style="margin-top: 2rem; font-size: 1.5rem;"></div>
+  <div id="result"></div>
 
   <script>
     const dataByCode = {
