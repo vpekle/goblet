@@ -54,6 +54,7 @@
       text-align: center;
       position: relative;
       animation: none;
+      font-size: 1rem;
     }
     .scroll.fly {
       animation: flyOut 1s ease-in-out forwards;
@@ -61,11 +62,14 @@
     .scroll.reveal {
       animation: revealScroll 1.5s ease forwards;
       display: flex;
-      position: absolute;
+      position: fixed;
       left: 50%;
-      transform: translateX(-50%);
-      top: -100px;
+      top: 50%;
+      transform: translate(-50%, -50%);
       z-index: 10;
+      font-size: 1.2rem;
+      width: 300px;
+      min-height: 80px;
     }
     @keyframes flyOut {
       0% { opacity: 1; transform: translateY(0); }
@@ -73,7 +77,7 @@
     }
     @keyframes revealScroll {
       0% { transform: translate(-50%, 50px); opacity: 0; }
-      100% { transform: translate(-50%, -100px); opacity: 1; }
+      100% { transform: translate(-50%, -50%); opacity: 1; }
     }
     #result {
       position: relative;
