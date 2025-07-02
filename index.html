@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кубок Огня</title>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #f8f8f8;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    #codeInput, #loadButton, #drawButton {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      margin: 1rem;
+    }
+    #goblet {
+      margin: 2rem auto;
+      width: 150px;
+      height: 200px;
+      background: radial-gradient(circle, #3b2d1f 40%, #1a0f05 100%);
+      border-radius: 20% 20% 50% 50% / 20% 20% 30% 30%;
+      position: relative;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 0.6);
+      animation: flicker 2s infinite;
+    }
+    @keyframes flicker {
+      0% { box-shadow: 0 0 10px rgba(255, 100, 0, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(255, 140, 0, 0.6); }
+      100% { box-shadow: 0 0 10px rgba(255, 100, 0, 0.3); }
+    }
+    .scroll {
+      width: 200px;
+      height: 60px;
+      background: #f0e6d2;
+      color: #000;
+      border: 2px solid #aa8855;
+      border-radius: 10px;
+      margin: 10px auto;
+      display: none;
+      position: relative;
+      animation: flyOut 1s ease-in-out forwards;
+    }
+    @keyframes flyOut {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-150px); }
+    }
+    .scroll.reveal {
+      animation: revealScroll 1.5s ease forwards;
+    }
+    @keyframes revealScroll {
+      0% { transform: translateY(-200px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Кубок Огня</h1>
+  <p>Введите код персонажа:</p>
+  <input type="text" id="codeInput" placeholder="Введите код">
+  <button id="loadButton" onclick="loadScrolls()">Подтвердить</button>
+
+  <div id="scrolls"></div>
+  <div id="goblet"></div>
+  <button id="drawButton" onclick="drawScroll()" style="display:none;">Получить задание</button>
+  <div id="result" style="margin-top: 2rem; font-size: 1.5rem;"></div>
+
+  <script>
+    const dataByCode = {
+      "VCE924": {
+        name: "Натсай Онай",
+        events: [
+          "Разлила напиток на себя",
+          "Уронила хрустальный шар",
+          "Опоздала",
+          "Произвела впечатление на главную гадалку",
+          "Сделала успешное предсказание"
+        ]
+      },
+      "WKG215": {
+        name: "Гектор Фоули",
+        events: [
+          "Пролил на министра магии напиток",
+          "Неудачно пошутил в присутствии высокопоставленных людей",
+          "Неверно произнес фамилию главы отдела",
+          "Произвел впечатление на министра",
+          "Предложил интересную идею"
+        ]
+      }
+    };
+
+    let options = [];
+
+    function loadScrolls() {
+      const code = document.getElementById('codeInput').value.trim();
+      const scrollsDiv = document.getElementById('scrolls');
+      scrollsDiv.innerHTML = '';
+
+      if (!dataByCode[code]) {
+        alert("Неверный код персонажа.");
+        return;
+      }
+
+      options = dataByCode[code].events;
+      options.forEach((text, index) => {
+        const scroll = document.createElement('div');
+        scroll.className = 'scroll';
+        scroll.style.animation = 'none';
+        scroll.style.display = 'block';
+        scroll.textContent = text;
+        scrollsDiv.appendChild(scroll);
+      });
+
+      document.getElementById('drawButton').style.display = 'inline-block';
+    }
+
+    function drawScroll() {
+      const scrolls = document.querySelectorAll('.scroll');
+      scrolls.forEach(scroll => {
+        scroll.style.animation = 'flyOut 1s ease-in-out forwards';
+      });
+
+      setTimeout(() => {
+        const selected = options[Math.floor(Math.random() * options.length)];
+        const resultDiv = document.getElementById('result');
+        const reveal = document.createElement('div');
+        reveal.className = 'scroll reveal';
+        reveal.textContent = selected;
+        resultDiv.innerHTML = '';
+        resultDiv.appendChild(reveal);
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
