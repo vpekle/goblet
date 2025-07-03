@@ -54,7 +54,7 @@
       animation: flyToGoblet 1.5s forwards;
     }
     .scroll.reveal {
-      animation: flyOutFromGoblet 1s ease-out forwards, spinScroll 2s linear infinite;
+      animation: flyOutFromGoblet 1s ease-out forwards;
       display: flex;
       position: fixed;
       left: 50%;
@@ -86,14 +86,6 @@
       100% {
         transform: translate(-50%, -50%) scale(1);
         opacity: 1;
-      }
-    }
-    @keyframes spinScroll {
-      0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-      100% {
-        transform: translate(-50%, -50%) rotate(360deg);
       }
     }
     #result {
