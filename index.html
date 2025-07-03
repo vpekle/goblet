@@ -45,20 +45,20 @@
       padding: 0.5rem;
       box-sizing: border-box;
       text-align: center;
-      position: relative;
-      animation: none;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 1rem;
-      transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     }
     .scroll.fly {
-      animation: flyToGoblet 1.2s forwards;
+      animation: flyToGoblet 1.5s forwards;
     }
     .scroll.reveal {
-      animation: revealScroll 1.5s ease forwards, spinScroll 2s linear infinite;
+      animation: flyOutFromGoblet 1s ease-out forwards, spinScroll 2s linear infinite;
       display: flex;
       position: fixed;
       left: 50%;
-      top: 50%;
+      top: 65%;
       transform: translate(-50%, -50%);
       z-index: 10;
       font-size: 1.2rem;
@@ -70,17 +70,17 @@
     }
     @keyframes flyToGoblet {
       0% {
-        transform: scale(1) translateY(0);
         opacity: 1;
+        transform: translate(-50%, 0) scale(1);
       }
       100% {
-        transform: scale(0.2) translate(0, 150px);
         opacity: 0;
+        transform: translate(-50%, 200px) scale(0.2);
       }
     }
-    @keyframes revealScroll {
+    @keyframes flyOutFromGoblet {
       0% {
-        transform: translate(-50%, 100px) scale(0.5);
+        transform: translate(-50%, 150px) scale(0.5);
         opacity: 0;
       }
       100% {
